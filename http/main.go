@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -40,6 +41,16 @@ type Page struct {
 
 func main() {
 	args := os.Args // receber argumentos passado por linhda de comando go run main <arg1>
+
+	var (
+		requestURL string
+		password   string
+	)
+
+	flag.StringVar(&requestURL, "url", "", "url to access")
+	flag.StringVar(&password, "", "", "use a password to access our api")
+
+	flag.Parse()
 
 	if len(args) < 2 { // verficia o tamanho do array de argumentos passado
 		fmt.Println("Usage: ./main <url>")
