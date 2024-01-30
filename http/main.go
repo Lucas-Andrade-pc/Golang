@@ -10,6 +10,16 @@ import (
 	"os"
 )
 
+type RequestError struct {
+	HTTPCode int
+	Body     string
+	Err      string
+}
+
+func (r RequestError) Error() string {
+	return r.Err
+}
+
 type Response interface {
 	getResponse() string
 }
@@ -79,7 +89,11 @@ func doRequest(requestUrl string) (Response, error) {
 		result.Status = response.StatusCode
 		err = json.Unmarshal(body, &result) // analisa os dados em JSON e armazena o resultado no valor apontado, ou seja, passei os dados body para a função e ele armazenou em nosso estrutura
 		if err != nil {
-			log.Fatal(err)
+			return nil, RequestError{
+				HTTPCode: response.StatusCode,
+				Body:     string(body),
+				Err:      fmt.Sprintf("Unmarshal error: %s", err),
+			}
 		}
 		return result, nil
 	} else {
