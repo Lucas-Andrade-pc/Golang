@@ -4,11 +4,22 @@ import "fmt"
 
 func main() {
 	var t string = "string"
-	discoverType(t)
+	var t2 *string = &t
+	discoverType(t2)
+	var t3 = 123
+	discoverType(t3)
+	discoverType(nil)
 }
 func discoverType(t any) {
-	switch t.(type) {
+	switch v := t.(type) {
 	case string:
-		fmt.Printf("Type: %s\n", t)
+		result := v + "..."
+		fmt.Printf("Type: %v\n", result)
+	case *string:
+		fmt.Printf("Type: %v\n", *v)
+	case int:
+		fmt.Printf("Type: %d\n", v)
+	default:
+		fmt.Println("Type not found")
 	}
 }
