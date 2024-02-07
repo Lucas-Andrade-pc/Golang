@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: helloworld-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: helloworld
@@ -13,8 +13,8 @@ spec:
         app: helloworld
     spec:
       containers:
-      - name: k8s-demo
-        image: wardviaene/k8s-demo
+      - name: k8s-demo-nginx
+        image: nginx:alpine
         ports:
         - name: nodejs-port
           containerPort: 3000
